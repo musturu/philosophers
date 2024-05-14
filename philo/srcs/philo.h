@@ -12,6 +12,10 @@
 
 # define BAD_ARGS "Error\nuse: ./philo n_philos t_die t_sleep t_eat [n_meals]\n"
 # define DELAY 500
+# define GRNB "\e[42m"
+# define CRES "\e[0m"
+# define reset "\e[0m"
+# define CRESET "\e[0m"
 
 typedef struct s_args
 {

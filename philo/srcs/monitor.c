@@ -27,7 +27,7 @@ void	check_health(void *tableu)
 			|| i != t->args.n_philos)
 			break ;
 	}
-	kill_phil(t,  i, end != 0 && end != t->args.n_philos);
+	kill_phil(t,  i, t->args.n_meals != 0 && end == t->args.n_philos);
 }
 
 void	kill_phil(t_table *table, int i, int killflag)
@@ -35,8 +35,8 @@ void	kill_phil(t_table *table, int i, int killflag)
 //	pthread_mutex_lock(table->philos[0].write);
 	*table->philos[0].stop = 1;
 	table->isdead = 1;
-	if (killflag)
+	if (!killflag)
 		printf("%lli %i has died\n", millitime() - table->args.start_time, i + 1);
 	else
-		printf("\n");
+		printf( GRNB"simulation has ended, no phils were harmed"reset"\n");
 }
