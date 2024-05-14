@@ -8,11 +8,11 @@ int	allocate(t_table *table)
 	table->philos = malloc(sizeof(t_phil) * table->args.n_philos);
 	table->threads = malloc(sizeof(pthread_t) * table->args.n_philos + 1);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->args.n_philos);
-	table->forkflags = ft_calloc(sizeof(char) , table->args.n_philos);
+	table->forkflags = ft_calloc(sizeof(char), table->args.n_philos);
 	if (table->philos && table->threads && table->forks)
 		return (1);
 	else
-		return 0;
+		return (0);
 }
 
 int	initialize(int argc, char **argv, t_table *table)
@@ -24,13 +24,13 @@ int	initialize(int argc, char **argv, t_table *table)
 	table->args = args;
 	allocate(table);
 	if (pthread_mutex_init(&write, NULL))
-		return 0; //errore
+		return (0);
 	table->write = write;
 	table->isdead = 0;
 	table->start = 0;
 	table->philos = init_philos(table);
 	if (!table->philos)
-		return 0;
+		return (0);
 	return (1);
 }
 
@@ -66,16 +66,16 @@ static t_args	init_args(int argc, char **argv)
 	const int	time_to_die = ft_atoi(argv[2]);
 	const int	time_to_eat = ft_atoi(argv[3]);
 	const int	time_to_sleep = ft_atoi(argv[4]);
-	t_args ret;
+	t_args		ret;
 
 	ret.tt_die = time_to_die;
 	ret.tt_eat = time_to_eat;
 	ret.n_philos = philos;
 	ret.tt_sleep = time_to_sleep;
-	ret.start_time = millitime();// + DELAY;
+	ret.start_time = millitime();
 	if (argc >= 6)
 		ret.n_meals = ft_atoi(argv[5]);
-	else 
+	else
 		ret.n_meals = 0;
 	return (ret);
 }

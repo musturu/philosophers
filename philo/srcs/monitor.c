@@ -15,11 +15,8 @@ void	check_health(void *tableu)
 	while (1)
 	{
 		usleep(5);
-		//printf("%lli\n", (millitime() - DELAY ) -
-		//	(table->philos[i].last_meal + table->args.tt_die));
 		if (!table->philos[i].eat_flag && 
-			millitime() >=
-			table->philos[i].last_meal + table->args.tt_die )
+			millitime() >= table->philos[i].last_meal + table->args.tt_die)
 			break ;
 		i = (i + 1) % table->args.n_philos;
 	}
@@ -28,7 +25,7 @@ void	check_health(void *tableu)
 
 void	kill_phil(t_table *table, int i)
 {
-	//pthread_mutex_lock(table->philos[0].write);
+//	pthread_mutex_lock(table->philos[0].write);
 	*table->philos[0].stop = 1;
 	table->isdead = 1;
 	printf("%lli %i MORTO, E' PROPRIO MORTO CREPATOAAAAAAAAAAA\n", millitime() - table->args.start_time, i + 1);

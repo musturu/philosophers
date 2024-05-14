@@ -22,6 +22,7 @@ int	run_threads(t_table *table)
 		if (pthread_join(table->threads[i], NULL))
 			return 1;
 	}
+	//pthread_mutex_unlock(table->philos[0].write);
 	printf("run_threads_end\n");
 	return (0);
 }

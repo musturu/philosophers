@@ -3,7 +3,7 @@
 
 
 
-void print_args(t_args args)
+/*void print_args(t_args args)
 {
 	printf("args;\n");
 	printf("n_philos: %i\n", args.n_philos);
@@ -12,9 +12,9 @@ void print_args(t_args args)
 	printf("ttsleep: %i\n", args.tt_sleep);
 	printf("nmeals: %i\n", args.n_meals);
 	printf("start_time: %llu\n", args.start_time);
-}
+}*/
 
-void	print_table(t_table table)
+/*void	print_table(t_table table)
 {
 	int i;
 
@@ -27,7 +27,7 @@ void	print_table(t_table table)
 		i++;
 	}
 	printf("table write = %p\n" , &table.write);
-}
+}*/
 
 int	main(int argc, char **argv)
 {
@@ -37,7 +37,7 @@ int	main(int argc, char **argv)
 		return printf(BAD_ARGS);
 	if (!initialize(argc, argv, &table))
 		return throw_error("Initializing", &table);
-	print_table(table);
+	//print_table(table);
 	if (run_threads(&table))
 		return throw_error("Threading", &table);
 	return (ft_exit(&table));

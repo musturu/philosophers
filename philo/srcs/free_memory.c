@@ -1,4 +1,3 @@
-
 #include "philo.h"
 
 void	free_table(t_table *table)
@@ -29,7 +28,7 @@ int	throw_error(char *str, t_table *table)
 	return (1);
 }
 
-int ft_exit(t_table *table)
+int	ft_exit(t_table *table)
 {
 	destroy_mutexes(table);
 	free_table(table);
