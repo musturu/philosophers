@@ -2,24 +2,24 @@
 
 void	take_forks(t_phil *phil)
 {
-	if (phil->id - 1 % 2 == 0)
+	if (phil->id  % 2 == 0)
 	{
 		pthread_mutex_lock(phil->r_fork);
 		*phil->rflag = 1;
-		msg_lock("has taken a fork", phil->write, *phil);
+		msg_lock("has taken a r-fork", phil->write, *phil);
 		pthread_mutex_lock(phil->l_fork);
 		*phil->lflag = 1;
-		msg_lock("has taken a fork", phil->write, *phil);
+		msg_lock("has taken a l-fork", phil->write, *phil);
 		return ;
 	}
 	else
 	{
 		pthread_mutex_lock(phil->l_fork);
 		*phil->lflag = 1;
-		msg_lock("has taken a fork", phil->write, *phil);
+		msg_lock("has taken a l-fork", phil->write, *phil);
 		pthread_mutex_lock(phil->r_fork);
 		*phil->rflag = 1;
-		msg_lock("has taken a fork", phil->write, *phil);
+		msg_lock("has taken a r-fork", phil->write, *phil);
 		return ;
 	}
 }
@@ -63,6 +63,7 @@ void	eat_sleep_repeat(void *philo)
 		continue ;
 	while (!*(phil->stop))
 	{
+
 		if (*phil->rflag != 0 || *phil->lflag != 0)
 			continue ;
 		eat(phil, time_to_eat);
