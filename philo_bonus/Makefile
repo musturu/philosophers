@@ -11,8 +11,7 @@ OBJDIR = objs/
 # Libraries
 
 # Source files
-SRC = actions.c validation.c init.c philo.c thread.c utils.c monitor.c free_memory.c \
-	  ft_itoa.c
+SRC = actions.c validation.c init.c philo.c forkprocess.c utils.c monitor.c free_memory.c
 
 SRCS	= $(addprefix $(SRCDIR), $(SRC))
 OBJ		= $(SRC:.c=.o)

@@ -48,8 +48,12 @@ int	ft_usleep(useconds_t time)
 
 void	msg_lock(char *str, sem_t *lock, t_phil phil)
 {
+	int i;
+
+	sem_getvalue(phil.forks, &i);
+	(void)lock;
 	sem_wait(lock);
-	printf("%llu %i %s\n", millitime() - phil.args.start_time, phil.id, str);
+	printf("%llu %i %s\t\t sem value = %i\n", millitime() - phil.args.start_time, phil.id, str, i);
 	if (str[0] != 'h')
 		sem_post(lock);
 }

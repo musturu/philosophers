@@ -15,6 +15,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdio.h>
+#include <unistd.h>
 
 void	take_forks(t_phil *phil)
 {
@@ -70,6 +71,7 @@ void	eat_sleep_repeat(void *philo)
 	pthread_create(&thread, NULL, (void *)check_health, phil);
 	while (1)
 	{
+		usleep(30);
 		eat(phil, time_to_eat);
 		philo_sleep(phil, time_to_sleep);
 		msg_lock("is thinking", phil->write, *phil);
