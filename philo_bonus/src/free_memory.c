@@ -4,6 +4,7 @@
 void	free_table(t_table *table)
 {
 	free(table->philos);
+	free(table->pid);
 }
 
 void	destroy_sem()
