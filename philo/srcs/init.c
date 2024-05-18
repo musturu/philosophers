@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/18 18:12:46 by lmoricon          #+#    #+#             */
+/*   Updated: 2024/05/18 18:12:47 by lmoricon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 static t_args	init_args(int argc, char **argv);
@@ -22,7 +34,8 @@ int	initialize(int argc, char **argv, t_table *table)
 
 	args = init_args(argc, argv);
 	table->args = args;
-	allocate(table);
+	if (!allocate(table))
+		return (0);
 	if (pthread_mutex_init(&write, NULL))
 		return (0);
 	table->write = write;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   actions.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/18 18:11:45 by lmoricon          #+#    #+#             */
+/*   Updated: 2024/05/18 18:12:39 by lmoricon         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
 void	take_forks(t_phil *phil)
@@ -17,6 +29,8 @@ void	take_forks(t_phil *phil)
 		pthread_mutex_lock(phil->l_fork);
 		*phil->lflag = 1;
 		msg_lock("has taken a l-fork", phil->write, *phil);
+		if (phil->args.n_philos == 1)
+			return ;
 		pthread_mutex_lock(phil->r_fork);
 		*phil->rflag = 1;
 		msg_lock("has taken a r-fork", phil->write, *phil);
@@ -35,6 +49,8 @@ void	drop_forks(t_phil *phil)
 void	eat(t_phil *phil, int time_to_eat)
 {
 	take_forks(phil);
+	if (phil->args.n_philos == 1)
+		return ;
 	phil->last_meal = millitime();
 	msg_lock("is eating", phil->write, *phil);
 	phil->eat_flag = 1;
@@ -63,10 +79,11 @@ void	eat_sleep_repeat(void *philo)
 		continue ;
 	while (!*(phil->stop))
 	{
-
 		if (*phil->rflag != 0 || *phil->lflag != 0)
 			continue ;
 		eat(phil, time_to_eat);
+		if (phil->args.n_philos == 1)
+			break ;
 		philo_sleep(phil, time_to_sleep);
 		msg_lock("is thinking", phil->write, *phil);
 	}
