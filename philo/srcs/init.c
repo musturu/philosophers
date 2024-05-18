@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <string.h>
 
 static t_args	init_args(int argc, char **argv);
 static t_phil	*init_philos(t_table *table);
@@ -21,6 +22,7 @@ int	allocate(t_table *table)
 	table->threads = malloc(sizeof(pthread_t) * table->args.n_philos + 1);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->args.n_philos);
 	table->forkflags = ft_calloc(sizeof(char), table->args.n_philos);
+	memset(table->forkflags, 1, table->args.n_philos);
 	if (table->philos && table->threads && table->forks)
 		return (1);
 	else

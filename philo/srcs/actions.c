@@ -11,29 +11,34 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
 
 void	take_forks(t_phil *phil)
 {
-	if (phil->id  % 2 == 0)
+	if (phil->id % 2 == 0)
 	{
 		pthread_mutex_lock(phil->r_fork);
-		*phil->rflag = 1;
+		*phil->rflag = 0;
 		msg_lock("has taken a r-fork", phil->write, *phil);
+		if (phil->args.n_philos == 1)
+			return ;
 		pthread_mutex_lock(phil->l_fork);
-		*phil->lflag = 1;
+		*phil->lflag = 0;
 		msg_lock("has taken a l-fork", phil->write, *phil);
+		phil->eat_flag = 1;
 		return ;
 	}
 	else
 	{
 		pthread_mutex_lock(phil->l_fork);
-		*phil->lflag = 1;
+		*phil->lflag = 0;
 		msg_lock("has taken a l-fork", phil->write, *phil);
 		if (phil->args.n_philos == 1)
 			return ;
 		pthread_mutex_lock(phil->r_fork);
-		*phil->rflag = 1;
+		*phil->rflag = 0;
 		msg_lock("has taken a r-fork", phil->write, *phil);
+		phil->eat_flag = 1;
 		return ;
 	}
 }
@@ -41,19 +46,17 @@ void	take_forks(t_phil *phil)
 void	drop_forks(t_phil *phil)
 {
 	pthread_mutex_unlock(phil->l_fork);
-	*phil->lflag = 0;
 	pthread_mutex_unlock(phil->r_fork);
-	*phil->rflag = 0;
+	*phil->rflag = 1;
+	*phil->lflag = 1;
 }
 
 void	eat(t_phil *phil, int time_to_eat)
 {
-	take_forks(phil);
 	if (phil->args.n_philos == 1)
 		return ;
 	phil->last_meal = millitime();
 	msg_lock("is eating", phil->write, *phil);
-	phil->eat_flag = 1;
 	phil->meals_count++;
 	ft_usleep(time_to_eat);
 	drop_forks(phil);
@@ -79,8 +82,8 @@ void	eat_sleep_repeat(void *philo)
 		continue ;
 	while (!*(phil->stop))
 	{
-		if (*phil->rflag != 0 || *phil->lflag != 0)
-			continue ;
+		usleep(60);
+		take_forks(phil);
 		eat(phil, time_to_eat);
 		if (phil->args.n_philos == 1)
 			break ;
