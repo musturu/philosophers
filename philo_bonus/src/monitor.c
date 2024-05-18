@@ -1,4 +1,5 @@
 #include "philo.h"
+#include <semaphore.h>
 #include <unistd.h>
 
 void	kill_phil(t_phil *table);
@@ -15,11 +16,15 @@ void	check_health(void *phil)
 			break ;
 		i = (i + 1) % p->args.n_philos;
 	}
-	kill_phil(p)  ;
+	kill_phil(p);
 }
 
 void	kill_phil(t_phil *table)
 {
-	printf("%lli %i has died\n", millitime() - table->args.start_time, table->id);
-	exit(0);
+	int	i;
+
+	i = -1;
+	msg_lock("has died", table->write, *table);
+	while (++i < table->args.n_philos)
+		sem_post(table->stop);
 }

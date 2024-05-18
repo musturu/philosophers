@@ -10,6 +10,8 @@ void	free_table(t_table *table)
 void	destroy_sem()
 {
 	sem_unlink("/forks");
+	sem_unlink("/stop");
+	sem_unlink("/write");
 }
 
 int	throw_error(char *str, t_table *table)

@@ -1,7 +1,4 @@
 #include "philo.h"
-#include <fcntl.h>
-#include <semaphore.h>
-#include <stdio.h>
 
 static t_args	init_args(int argc, char **argv);
 static t_phil	*init_philos(t_table *table);
@@ -14,12 +11,14 @@ int	allocate(t_table *table)
 	if (!table->philos)
 		return (0);
 	table->forks = sem_open("/forks", O_CREAT, 0777 , 0U);
-	//sem_unlink("/forks");
-	if (table->forks == SEM_FAILED)
+	table->stop = sem_open("/stop", O_CREAT, 0777 , 0U);
+	table->write = sem_open("/write", O_CREAT, 0777 , 0U);
+	if (table->forks == SEM_FAILED || table->write == SEM_FAILED 
+		|| table->stop == SEM_FAILED)
 		return (0);
+	sem_post(table->write);
 	while (++i < table->args.n_philos)
 		sem_post(table->forks);
-	printf("sem value = %i\n", i);
 	return (1);
 }
 

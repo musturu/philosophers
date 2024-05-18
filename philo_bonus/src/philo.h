@@ -41,6 +41,7 @@ typedef struct s_philo
 	int				meals_count;
 	sem_t			*forks;
 	sem_t			*write;
+	sem_t			*stop;
 }	t_phil;
 
 typedef struct s_table
@@ -50,13 +51,14 @@ typedef struct s_table
 	t_phil	*philos;
 	sem_t	*forks;
 	sem_t	*write;
+	sem_t	*stop;
 }	t_table;
 
 int			ft_exit(t_table *table);
 void		*ft_calloc(size_t count, size_t size);
 int			ft_atoi(const char *str);
 int			throw_error(char *str, t_table *table);
-void		msg_lock(char *str, t_phil phil);
+void		msg_lock(char *str, sem_t *sem, t_phil phil);
 void		check_health(void *tableu);
 int			validate(int argc, char **argv);
 int			initialize(int argc, char **argv, t_table *table);

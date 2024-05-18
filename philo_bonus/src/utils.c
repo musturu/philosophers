@@ -1,4 +1,5 @@
 #include "philo.h"
+#include <semaphore.h>
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -31,5 +32,13 @@ int	ft_usleep(useconds_t time)
 	while ((millitime() - start) < time)
 		usleep(time / 10);
 	return (0);
+}
+
+void	msg_lock(char *str, sem_t *lock, t_phil phil)
+{
+	sem_wait(lock);
+	printf("%llu %i %s\n", millitime() - phil.args.start_time, phil.id, str);
+	if (str[0] != 'h')
+		sem_post(lock);
 }
 

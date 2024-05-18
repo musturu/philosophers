@@ -33,7 +33,9 @@ void	kill_children(t_table table)
 int	main(int argc, char **argv)
 {
 	t_table table;
+	int	i;
 
+	i = -1;
 	if (!validate(argc, argv))
 		return printf(BAD_ARGS);
 	if (!initialize(argc, argv, &table))
@@ -41,7 +43,8 @@ int	main(int argc, char **argv)
 	print_table(table);
 	if (run_threads(&table))
 		return throw_error("Threading", &table);
-	waitpid(-1, NULL, 0);
+	while (++i < table.args.n_philos)
+		sem_wait(table.stop);
 	kill_children(table);
 	return (ft_exit(&table));
 }
