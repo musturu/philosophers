@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror 
 
 # Directories
-SRCDIR = src/
+SRCDIR = srcs/
 OBJDIR = objs/
 
 # Libraries
