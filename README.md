@@ -32,13 +32,13 @@ To run the project, follow these steps:
 make will compile 2 executables, phil and phil_bonus, the first one is based on threads and mutexes, the latter uses semaphores and multi-process instead.
 both take the same arguments which are: NUMBER_OF_PHILOSOPHERS 
 
-1. NUMBER_OF_PHILOSOPHERS	defines both how many philosophers there are as well as how many forks
-2. TIME_TO_DIE	defines how much time (milliseconds) it takes for a philosopher to starve
-3. TIME_TO_EAT	defines how much time (milliseconds) it takes for a philosopher to eat
-4. TIME_TO_SLEEP defines how much time (milliseconds) it takes for a philosopher to sleep
-5. {OPTIONAL} NUMBER_OF_MEALS defines how many meals must each philosopher eat before the simulation ends
+1. `NUMBER_OF_PHILOSOPHERS`	defines both how many philosophers there are as well as how many forks
+2. `TIME_TO_DIE`	defines how much time (milliseconds) it takes for a philosopher to starve
+3. `TIME_TO_EAT`	defines how much time (milliseconds) it takes for a philosopher to eat
+4. `TIME_TO_SLEEP` defines how much time (milliseconds) it takes for a philosopher to sleep
+5. {OPTIONAL} `NUMBER_OF_MEALS` defines how many meals must each philosopher eat before the simulation ends
 
-example : ./philo 5 800 200 200 (in this example the simulation should not stop) 
+example : `./philo 5 800 200 200` (in this example the simulation should not stop) 
 
 
 
