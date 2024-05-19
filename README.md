@@ -28,10 +28,17 @@ To run the project, follow these steps:
 1. Clone the repository
 2. Navigate into the cloned repository: `cd <repository_directory>`
 3. Compile the project: `make`
-Run the multi-thread simulation: `./philo number_of_philosophers time_to_die time_to_eat time_to_sleep [optional_minimum_meals]`
-Run the multi-process simulation: `./philo_bonus number_of_philosophers time_to_die time_to_eat time_to_sleep [optional_minimum_meals]`
 
-example : ./philo 5 800 200 200
+make will compile 2 executables, phil and phil_bonus, the first one is based on threads and mutexes, the latter uses semaphores and multi-process instead.
+both take the same arguments which are: NUMBER_OF_PHILOSOPHERS 
+
+1. NUMBER_OF_PHILOSOPHERS	defines both how many philosophers there are as well as how many forks
+2. TIME_TO_DIE	defines how much time (milliseconds) it takes for a philosopher to starve
+3. TIME_TO_EAT	defines how much time (milliseconds) it takes for a philosopher to eat
+4. TIME_TO_SLEEP defines how much time (milliseconds) it takes for a philosopher to sleep
+5. {OPTIONAL} NUMBER_OF_MEALS defines how many meals must each philosopher eat before the simulation ends
+
+example : ./philo 5 800 200 200 (in this example the simulation should not stop) 
 
 
 
