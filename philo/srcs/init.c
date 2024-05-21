@@ -21,6 +21,7 @@ int	allocate(t_table *table)
 	table->philos = malloc(sizeof(t_phil) * table->args.n_philos);
 	table->threads = malloc(sizeof(pthread_t) * table->args.n_philos + 1);
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->args.n_philos);
+	table->deadlocks = malloc(sizeof(pthread_mutex_t) * table->args.n_philos);
 	table->forkflags = ft_calloc(sizeof(char), table->args.n_philos);
 	memset(table->forkflags, 1, table->args.n_philos);
 	if (table->philos && table->threads && table->forks)
@@ -54,8 +55,8 @@ static t_phil	*init_philos(t_table *table)
 	int		i;
 	t_phil	*philos;
 
-	philos = table->philos;
 	i = 0;
+	philos = table->philos;
 	while (i < table->args.n_philos)
 	{
 		philos[i].start = &(table->start);
@@ -66,8 +67,10 @@ static t_phil	*init_philos(t_table *table)
 		philos[i].last_meal = millitime();
 		philos[i].stop = &(table->isdead);
 		philos[i].write = &(table->write);
+		philos[i].deadlock = table->deadlocks + i;
 		philos[i].r_fork = table->forks + i;
 		philos[i].rflag = table->forkflags + i;
+		pthread_mutex_init(philos[i].deadlock, NULL);
 		pthread_mutex_init(philos[i++].r_fork, NULL);
 		philos[i % table->args.n_philos].l_fork = philos[i - 1].r_fork;
 		philos[i % table->args.n_philos].lflag = philos[i - 1].rflag;

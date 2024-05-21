@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
 #include <unistd.h>
 
 void	take_forks(t_phil *phil)
@@ -23,6 +24,7 @@ void	take_forks(t_phil *phil)
 		if (phil->args.n_philos == 1)
 			return ;
 		pthread_mutex_lock(phil->r_fork);
+		pthread_mutex_lock(phil->deadlock);
 		*phil->rflag = 0;
 		msg_lock("has taken a l-fork", phil->write, *phil);
 		phil->eat_flag = 1;
@@ -36,6 +38,7 @@ void	take_forks(t_phil *phil)
 		if (phil->args.n_philos == 1)
 			return ;
 		pthread_mutex_lock(phil->l_fork);
+		pthread_mutex_lock(phil->deadlock);
 		*phil->lflag = 0;
 		msg_lock("has taken a r-fork", phil->write, *phil);
 		phil->eat_flag = 1;
@@ -55,6 +58,7 @@ void	eat(t_phil *phil, int time_to_eat)
 {
 	if (phil->args.n_philos == 1)
 		return ;
+	pthread_mutex_unlock(phil->deadlock);
 	phil->last_meal = millitime();
 	msg_lock("is eating", phil->write, *phil);
 	phil->meals_count++;

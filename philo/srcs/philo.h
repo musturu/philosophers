@@ -48,11 +48,12 @@ typedef struct s_philo
 	int				meals_count;
 	int				*start;
 	int				*stop;
-	pthread_mutex_t	*write;
-	pthread_mutex_t	*r_fork;
 	char			*rflag;
 	char			*lflag;
+	pthread_mutex_t	*write;
+	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*deadlock;
 }	t_phil;
 
 typedef struct s_table
@@ -63,6 +64,7 @@ typedef struct s_table
 	t_phil			*philos;
 	pthread_t		*threads;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	*deadlocks;
 	char			*forkflags;
 	pthread_mutex_t	write;
 }	t_table;

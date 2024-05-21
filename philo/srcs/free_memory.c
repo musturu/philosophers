@@ -18,6 +18,7 @@ void	free_table(t_table *table)
 	free(table->threads);
 	free(table->forks);
 	free(table->forkflags);
+	free(table->deadlocks);
 }
 
 void	destroy_mutexes(t_table *table)
@@ -27,7 +28,8 @@ void	destroy_mutexes(t_table *table)
 	i = -1;
 	while (++i < table->args.n_philos)
 	{
-		pthread_mutex_destroy(&table->forks[i]);
+		pthread_mutex_destroy(table->deadlocks + i);
+		pthread_mutex_destroy(table->forks + i);
 	}
 	pthread_mutex_destroy(&table->write);
 }

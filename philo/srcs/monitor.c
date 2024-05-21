@@ -11,9 +11,19 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
 #include <unistd.h>
 
 void	kill_phil(t_table *table, int i, int flag);
+
+char	has_to_die(t_table *t, int i, int end)
+{
+	if ((t->args.n_meals != 0 && end == t->args.n_meals) 
+				||	(!t->philos[i].eat_flag 
+				&& millitime() >= t->philos[i].last_meal + t->args.tt_die))
+		return (1);
+	return (0);
+}
 
 void	check_health(void *tableu)
 {
@@ -28,10 +38,13 @@ void	check_health(void *tableu)
 		i = -1;
 		while (++i < t->args.n_philos)
 		{
-			if ((t->args.n_meals != 0 && end == t->args.n_meals) 
-				||	(!t->philos[i].eat_flag 
-				&& millitime() >= t->philos[i].last_meal + t->args.tt_die))
+			pthread_mutex_lock(t->deadlocks + i);
+			if (has_to_die(t, i, end))
+			{
+				pthread_mutex_unlock(t->deadlocks + i);
 				break ;
+			}
+			pthread_mutex_unlock(t->deadlocks + i);
 			if (t->args.n_meals != 0 && t->philos[i].meals_count >= t->args.n_meals)
 				end++;
 		}
