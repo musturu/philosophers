@@ -86,7 +86,7 @@ void	eat_sleep_repeat(void *philo)
 		continue ;
 	while (!*(phil->stop))
 	{
-		usleep(30);
+		usleep(15);
 		take_forks(phil);
 		eat(phil, time_to_eat);
 		if (phil->args.n_philos == 1)
