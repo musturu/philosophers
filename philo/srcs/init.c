@@ -19,12 +19,13 @@ static t_phil	*init_philos(t_table *table);
 int	allocate(t_table *table)
 {
 	table->philos = malloc(sizeof(t_phil) * table->args.n_philos);
-	table->threads = malloc(sizeof(pthread_t) * table->args.n_philos + 1);
+	table->threads = malloc(sizeof(pthread_t) * (table->args.n_philos + 1));
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->args.n_philos);
 	table->deadlocks = malloc(sizeof(pthread_mutex_t) * table->args.n_philos);
 	table->forkflags = ft_calloc(sizeof(char), table->args.n_philos);
 	memset(table->forkflags, 1, table->args.n_philos);
-	if (table->philos && table->threads && table->forks)
+	if (table->philos && table->threads && table->forks
+		&& table->deadlocks && table->forkflags)
 		return (1);
 	else
 		return (0);

@@ -11,13 +11,8 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <semaphore.h>
-#include <signal.h>
-#include <stdio.h>
 
-
-
-void print_args(t_args args)
+void	print_args(t_args args)
 {
 	printf("args;\n");
 	printf("n_philos: %i\n", args.n_philos);
@@ -44,17 +39,17 @@ void	kill_children(t_table table)
 
 int	main(int argc, char **argv)
 {
-	t_table table;
-	int	i;
+	t_table	table;
+	int		i;
 
 	i = -1;
 	if (!validate(argc, argv))
-		return printf(BAD_ARGS);
+		return (printf(BAD_ARGS));
 	if (!initialize(argc, argv, &table))
-		return throw_error("Initializing", &table);
+		return (throw_error("Initializing", &table));
 	print_table(table);
 	if (run_threads(&table))
-		return throw_error("Threading", &table);
+		return (throw_error("Threading", &table));
 	while (++i < table.args.n_philos)
 		sem_wait(table.stop);
 	kill_children(table);

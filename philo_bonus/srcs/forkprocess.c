@@ -15,13 +15,13 @@
 
 int	run_threads(t_table *table)
 {
-	int	i;
+	int		i;
 	pid_t	*pid;
 
 	i = -1;
 	pid = malloc(sizeof(pid_t) * table->args.n_philos);
 	if (!pid)
-		return 1;
+		return (1);
 	while (++i < table->args.n_philos)
 	{
 		pid[i] = fork();

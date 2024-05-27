@@ -12,29 +12,26 @@
 
 #include "philo.h"
 
-int	run_threads(t_table *table)
+int	run_threads(t_table *t)
 {
 	int	i;
 
 	i = -1;
-	while (++i < table->args.n_philos)
+	while (++i < t->args.n_philos)
 	{
-		if (pthread_create(&table->threads[i], NULL, (void *)&eat_sleep_repeat,
-					 &table->philos[i]))
-			return 1;
-		printf("thread #%i started\n", i);
+		if (pthread_create(&t->threads[i], NULL, (void *)&eat_sleep_repeat,
+				&t->philos[i]))
+			return (1);
 		usleep(1);
 	}
-	if (pthread_create(&table->threads[i], NULL, (void *)&(check_health), table))
-		return 1;
-	table->start = 1;
+	if (pthread_create(&t->threads[i], NULL, (void *)&(check_health), t))
+		return (1);
+	t->start = 1;
 	while (i >= 0)
 	{
-		if (pthread_join(table->threads[i], NULL))
-			return 1;
+		if (pthread_join(t->threads[i], NULL))
+			return (1);
 		i--;
 	}
-	//pthread_mutex_unlock(table->philos[0].write);
-	printf("run_threads_end\n");
 	return (0);
 }

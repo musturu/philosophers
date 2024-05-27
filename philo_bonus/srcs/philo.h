@@ -30,7 +30,7 @@
 # define DELAY 500
 # define GRNB "\e[42m"
 # define CRES "\e[0m"
-# define reset "\e[0m"
+# define RESET "\e[0m"
 # define CRESET "\e[0m"
 
 typedef struct s_args
@@ -67,6 +67,7 @@ typedef struct s_table
 }	t_table;
 
 int			ft_exit(t_table *table);
+void		close_sems(t_phil	*phil);
 void		*ft_calloc(size_t count, size_t size);
 int			ft_atoi(const char *str);
 int			throw_error(char *str, t_table *table);

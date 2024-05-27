@@ -19,11 +19,18 @@ void	free_table(t_table *table)
 	free(table->pid);
 }
 
-void	destroy_sem()
+void	destroy_sem(void)
 {
 	sem_unlink("/forks");
 	sem_unlink("/stop");
 	sem_unlink("/write");
+}
+
+void	close_sems(t_phil	*phil)
+{
+	sem_close(phil->write);
+	sem_close(phil->stop);
+	sem_close(phil->forks);
 }
 
 int	throw_error(char *str, t_table *table)

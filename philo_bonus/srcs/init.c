@@ -17,15 +17,16 @@ static t_phil	*init_philos(t_table *table);
 
 int	allocate(t_table *table)
 {
-	int i = - 1;
+	int	i;
 
+	i = -1;
 	table->philos = malloc(sizeof(t_phil) * table->args.n_philos);
 	if (!table->philos)
 		return (0);
-	table->forks = sem_open("/forks", O_CREAT, 0777 , 0U);
-	table->stop = sem_open("/stop", O_CREAT, 0777 , 0U);
-	table->write = sem_open("/write", O_CREAT, 0777 , 0U);
-	if (table->forks == SEM_FAILED || table->write == SEM_FAILED 
+	table->forks = sem_open("/forks", O_CREAT, 0777, 0U);
+	table->stop = sem_open("/stop", O_CREAT, 0777, 0U);
+	table->write = sem_open("/write", O_CREAT, 0777, 0U);
+	if (table->forks == SEM_FAILED || table->write == SEM_FAILED
 		|| table->stop == SEM_FAILED)
 		return (0);
 	sem_post(table->write);

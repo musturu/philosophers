@@ -59,13 +59,12 @@ void	eat_sleep_repeat(void *philo)
 	pthread_t	thread;
 
 	phil = (t_phil *)philo;
-	printf("philo number %i has entered the cycle\n", phil->id);
 	time_to_eat = phil->args.tt_eat;
 	time_to_sleep = phil->args.tt_sleep;
 	phil->forks = sem_open("/forks", 0);
 	phil->stop = sem_open("/stop", 0);
 	phil->write = sem_open("/write", 0);
-	if (phil->forks == SEM_FAILED || phil->write == SEM_FAILED 
+	if (phil->forks == SEM_FAILED || phil->write == SEM_FAILED
 		|| phil->stop == SEM_FAILED)
 		exit(-1);
 	pthread_create(&thread, NULL, (void *)check_health, phil);
@@ -77,8 +76,6 @@ void	eat_sleep_repeat(void *philo)
 		msg_lock("is thinking", phil->write, *phil);
 	}
 	pthread_join(thread, NULL);
-	sem_close(phil->write);
-	sem_close(phil->stop);
-	sem_close(phil->forks);
+	close_sems(phil);
 	exit(1);
 }

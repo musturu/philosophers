@@ -26,7 +26,7 @@
 # define DELAY 500
 # define GRNB "\e[42m"
 # define CRES "\e[0m"
-# define reset "\e[0m"
+# define RESET "\e[0m"
 # define CRESET "\e[0m"
 
 typedef struct s_args

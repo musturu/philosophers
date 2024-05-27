@@ -88,4 +88,3 @@ static int	is_num(char *str)
 	else
 		return (1);
 }
-
