@@ -12,6 +12,7 @@
 
 #include "philo.h"
 #include <pthread.h>
+#include <stdio.h>
 #include <unistd.h>
 
 void	kill_phil(t_table *table, int i, int flag);
@@ -44,6 +45,7 @@ void	check_health(void *tableu)
 	int		i;
 	t_table	*t;
 	int		end;
+	int		boole;
 
 	t = (t_table *)tableu;
 	while (1)
@@ -52,24 +54,27 @@ void	check_health(void *tableu)
 		i = -1;
 		while (++i < t->args.n_philos)
 		{
-			if (phil_checks(t, i, end) == 0)
+			boole = phil_checks(t, i, end);
+			if (boole == 0)
 				break ;
-			else if (t->args.n_meals != 0)
+			else if (boole == 1)
 				end++;
 		}
 		if ((t->args.n_meals != 0 && end == t->args.n_philos)
 			|| i != t->args.n_philos)
 			break ;
 	}
-	kill_phil(t, i, t->args.n_meals != 0 && end == t->args.n_philos);
+	kill_phil(t, i, (t->args.n_meals != 0 && end == t->args.n_meals));
 }
 
 void	kill_phil(t_table *t, int i, int killflag)
 {
+	pthread_mutex_lock(t->philos[0].write);
 	*t->philos[0].stop = 1;
 	t->isdead = 1;
 	if (!killflag)
 		printf("%lli %i has died\n", millitime() - t->args.start_time, i + 1);
 	else
 		printf(GRNB"simulation has ended, no phils were harmed"RESET"\n");
+	pthread_mutex_unlock(t->philos[0].write);
 }

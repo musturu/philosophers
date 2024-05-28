@@ -20,7 +20,7 @@ void	take_forks(t_phil *phil)
 	{
 		pthread_mutex_lock(phil->l_fork);
 		*phil->lflag = 0;
-		if (phil->args.n_philos == 1)
+		if (phil->args->n_philos == 1)
 			return ;
 		msg_lock("has taken a l-fork", phil->write, *phil);
 		pthread_mutex_lock(phil->r_fork);
@@ -33,7 +33,7 @@ void	take_forks(t_phil *phil)
 		pthread_mutex_lock(phil->r_fork);
 		*phil->rflag = 0;
 		msg_lock("has taken a r-fork", phil->write, *phil);
-		if (phil->args.n_philos == 1)
+		if (phil->args->n_philos == 1)
 			return ;
 		pthread_mutex_lock(phil->l_fork);
 		pthread_mutex_lock(phil->deadlock);
@@ -52,7 +52,7 @@ void	drop_forks(t_phil *phil)
 
 void	eat(t_phil *phil, int time_to_eat)
 {
-	if (phil->args.n_philos == 1)
+	if (phil->args->n_philos == 1)
 		return ;
 	phil->eat_flag = 1;
 	pthread_mutex_unlock(phil->deadlock);
@@ -77,16 +77,17 @@ void	eat_sleep_repeat(void *philo)
 	int		time_to_sleep;
 
 	phil = (t_phil *)philo;
-	time_to_eat = phil->args.tt_eat;
-	time_to_sleep = phil->args.tt_sleep;
+	time_to_eat = phil->args->tt_eat;
+	time_to_sleep = phil->args->tt_sleep;
 	while (*phil->start == 0)
 		continue ;
+	phil->last_meal = millitime();
 	while (!*(phil->stop))
 	{
 		usleep(100);
 		take_forks(phil);
 		eat(phil, time_to_eat);
-		if (phil->args.n_philos == 1)
+		if (phil->args->n_philos == 1)
 			break ;
 		philo_sleep(phil, time_to_sleep);
 		msg_lock("is thinking", phil->write, *phil);

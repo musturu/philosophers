@@ -49,6 +49,6 @@ void	msg_lock(char *str, pthread_mutex_t *lock, t_phil p)
 {
 	pthread_mutex_lock(lock);
 	if (!*p.stop)
-		printf("%llu %i %s\n", millitime() - p.args.start_time, p.id, str);
+		printf("%llu %i %s\n", millitime() - p.args->start_time, p.id, str);
 	pthread_mutex_unlock(lock);
 }

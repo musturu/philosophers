@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdio.h>
 #include <string.h>
 
 static t_args	init_args(int argc, char **argv);
@@ -61,7 +62,7 @@ static t_phil	*init_philos(t_table *table)
 	while (i < table->args.n_philos)
 	{
 		philos[i].start = &(table->start);
-		philos[i].args = table->args;
+		philos[i].args = &table->args;
 		philos[i].id = i + 1;
 		philos[i].eat_flag = 0;
 		philos[i].meals_count = 0;
@@ -96,5 +97,6 @@ static t_args	init_args(int argc, char **argv)
 		ret.n_meals = ft_atoi(argv[5]);
 	else
 		ret.n_meals = 0;
+	printf("wtf %i\n", ret.n_meals);
 	return (ret);
 }

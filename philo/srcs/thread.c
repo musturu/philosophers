@@ -24,6 +24,7 @@ int	run_threads(t_table *t)
 			return (1);
 		usleep(1);
 	}
+	t->args.start_time = millitime();
 	if (pthread_create(&t->threads[i], NULL, (void *)&(check_health), t))
 		return (1);
 	t->start = 1;

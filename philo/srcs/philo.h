@@ -44,7 +44,7 @@ typedef struct s_philo
 	int				id;
 	char			eat_flag;
 	long long		last_meal;
-	t_args			args;
+	t_args			*args;
 	int				meals_count;
 	int				*start;
 	int				*stop;
