@@ -30,7 +30,7 @@ To run the project, follow these steps:
 3. Compile the project: `make`
 
 make will compile 2 executables, phil and phil_bonus, the first one is based on threads and mutexes, the latter uses semaphores and multi-process instead.
-both take the same arguments which are: NUMBER_OF_PHILOSOPHERS 
+both take the same arguments which are:
 
 1. `NUMBER_OF_PHILOSOPHERS`	defines both how many philosophers there are as well as how many forks
 2. `TIME_TO_DIE`	defines how much time (milliseconds) it takes for a philosopher to starve
