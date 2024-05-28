@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:12:51 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:12:53 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/05/28 17:30:57 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	kill_phil(t_table *table, int i, int flag);
 
 char	has_to_die(t_table *t, int i, int end)
 {
-	if ((t->args.n_meals != 0 && end == t->args.n_meals)
+	if ((t->args.n_meals != 0 && end == t->args.n_philos)
 		|| (!t->philos[i].eat_flag
 			&& millitime() >= t->philos[i].last_meal + t->args.tt_die))
 		return (1);
@@ -64,7 +64,7 @@ void	check_health(void *tableu)
 			|| i != t->args.n_philos)
 			break ;
 	}
-	kill_phil(t, i, (t->args.n_meals != 0 && end == t->args.n_meals));
+	kill_phil(t, i, (t->args.n_meals != 0 && end == t->args.n_philos));
 }
 
 void	kill_phil(t_table *t, int i, int killflag)
