@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:58 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:14:58 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:53:34 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void	msg_lock(char *str, sem_t *lock, t_phil phil)
 	sem_wait(lock);
 	printf("%llu %i %s\n",
 		millitime() - phil.args.start_time, phil.id, str);
-	if (str[0] != 'h')
+	if (str[0] != 'd')
 		sem_post(lock);
 }

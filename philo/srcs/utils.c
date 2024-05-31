@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:13:08 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:13:09 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/05/31 13:17:18 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,11 @@ int	ft_usleep(useconds_t time)
 
 void	msg_lock(char *str, pthread_mutex_t *lock, t_phil p)
 {
+	long long	timestamp;
+
+	timestamp = millitime() - p.args->start_time;
 	pthread_mutex_lock(lock);
 	if (!*p.stop)
-		printf("%llu %i %s\n", millitime() - p.args->start_time, p.id, str);
+		printf("%llu %i %s\n", timestamp, p.id, str);
 	pthread_mutex_unlock(lock);
 }

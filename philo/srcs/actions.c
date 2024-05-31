@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:11:45 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:12:39 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:44:51 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,37 @@ void	take_forks(t_phil *phil)
 		*phil->lflag = 0;
 		if (phil->args->n_philos == 1)
 			return ;
-		msg_lock("has taken a l-fork", phil->write, *phil);
+		msg_lock("has taken a fork", phil->write, *phil);
 		pthread_mutex_lock(phil->r_fork);
-		pthread_mutex_lock(phil->deadlock);
 		*phil->rflag = 0;
-		msg_lock("has taken a r-fork", phil->write, *phil);
+		msg_lock("has taken a fork", phil->write, *phil);
 	}
 	else
 	{
 		pthread_mutex_lock(phil->r_fork);
 		*phil->rflag = 0;
-		msg_lock("has taken a r-fork", phil->write, *phil);
+		msg_lock("has taken a fork", phil->write, *phil);
 		if (phil->args->n_philos == 1)
 			return ;
 		pthread_mutex_lock(phil->l_fork);
-		pthread_mutex_lock(phil->deadlock);
 		*phil->lflag = 0;
-		msg_lock("has taken a l-fork", phil->write, *phil);
+		msg_lock("has taken a fork", phil->write, *phil);
 	}
 }
 
 void	drop_forks(t_phil *phil)
 {
+	*phil->lflag = 1;
+	*phil->rflag = 1;
 	pthread_mutex_unlock(phil->l_fork);
 	pthread_mutex_unlock(phil->r_fork);
-	*phil->rflag = 1;
-	*phil->lflag = 1;
 }
 
 void	eat(t_phil *phil, int time_to_eat)
 {
 	if (phil->args->n_philos == 1)
 		return ;
+	pthread_mutex_lock(phil->deadlock);
 	phil->eat_flag = 1;
 	pthread_mutex_unlock(phil->deadlock);
 	phil->last_meal = millitime();
@@ -82,14 +81,17 @@ void	eat_sleep_repeat(void *philo)
 	while (*phil->start == 0)
 		continue ;
 	phil->last_meal = millitime();
+	if (phil->id % 2 == 0 || (phil->id == phil->args->n_philos && phil->args->n_philos % 2 == 1))
+		ft_usleep(time_to_eat);
 	while (!*(phil->stop))
 	{
-		usleep(100);
 		take_forks(phil);
 		eat(phil, time_to_eat);
 		if (phil->args->n_philos == 1)
 			break ;
 		philo_sleep(phil, time_to_sleep);
 		msg_lock("is thinking", phil->write, *phil);
+		if (phil->args->n_philos % 2 == 1)
+			ft_usleep(time_to_eat);
 	}
 }

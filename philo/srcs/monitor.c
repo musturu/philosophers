@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:12:51 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/28 17:30:57 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/05/31 14:12:46 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	kill_phil(t_table *t, int i, int killflag)
 	*t->philos[0].stop = 1;
 	t->isdead = 1;
 	if (!killflag)
-		printf("%lli %i has died\n", millitime() - t->args.start_time, i + 1);
+		printf("%lli %i died\n", millitime() - t->args.start_time, i + 1);
 	else
 		printf(GRNB"simulation has ended, no phils were harmed"RESET"\n");
 	pthread_mutex_unlock(t->philos[0].write);

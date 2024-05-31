@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitor.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:45 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:14:46 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/05/31 19:50:58 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	kill_phil(t_phil *table)
 	int	i;
 
 	i = -1;
-	msg_lock("has died", table->write, *table);
+	msg_lock("died", table->write, *table);
 	while (++i < table->args.n_philos)
 		sem_post(table->stop);
 }
