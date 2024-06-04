@@ -32,6 +32,7 @@ void	destroy_mutexes(t_table *table)
 		pthread_mutex_destroy(table->forks + i);
 	}
 	pthread_mutex_destroy(&table->write);
+	pthread_mutex_destroy(&table->stopwatch);
 }
 
 int	throw_error(char *str, t_table *table)

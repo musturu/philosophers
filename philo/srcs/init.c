@@ -36,6 +36,7 @@ int	initialize(int argc, char **argv, t_table *table)
 {
 	t_args			args;
 	pthread_mutex_t	write;
+	pthread_mutex_t	stop;
 
 	args = init_args(argc, argv);
 	table->args = args;
@@ -43,7 +44,10 @@ int	initialize(int argc, char **argv, t_table *table)
 		return (0);
 	if (pthread_mutex_init(&write, NULL))
 		return (0);
+	if (pthread_mutex_init(&stop, NULL))
+		return (0);
 	table->write = write;
+	table->stopwatch = stop;
 	table->isdead = 0;
 	table->start = 0;
 	table->philos = init_philos(table);
@@ -69,6 +73,7 @@ static t_phil	*init_philos(t_table *table)
 		philos[i].last_meal = millitime();
 		philos[i].stop = &(table->isdead);
 		philos[i].write = &(table->write);
+		philos[i].stopwatch = &(table->stopwatch);
 		philos[i].deadlock = table->deadlocks + i;
 		philos[i].r_fork = table->forks + i;
 		philos[i].rflag = table->forkflags + i;

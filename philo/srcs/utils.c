@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <unistd.h>
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -39,6 +40,9 @@ int	ft_usleep(useconds_t time)
 {
 	u_int64_t	start;
 
+	usleep(time * 500);
+	usleep(time * 500);
+	return (0);
 	start = millitime();
 	while ((millitime() - start) < time)
 		usleep(time / 10);
@@ -55,12 +59,12 @@ void	msg_lock(char *str, pthread_mutex_t *lock, t_phil p)
 
 int	stop_watch(t_phil *phil)
 {
-	pthread_mutex_lock(phil->write);
+	pthread_mutex_lock(phil->stopwatch);
 	if (*phil->stop)
 	{
-		pthread_mutex_unlock(phil->write);
+		pthread_mutex_unlock(phil->stopwatch);
 		return (1);
 	}
-	pthread_mutex_unlock(phil->write);
+	pthread_mutex_unlock(phil->stopwatch);
 	return (0);
 }

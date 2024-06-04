@@ -54,6 +54,7 @@ typedef struct s_philo
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*deadlock;
+	pthread_mutex_t	*stopwatch;
 }	t_phil;
 
 typedef struct s_table
@@ -65,6 +66,7 @@ typedef struct s_table
 	pthread_t		*threads;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	*deadlocks;
+	pthread_mutex_t	stopwatch;
 	char			*forkflags;
 	pthread_mutex_t	write;
 }	t_table;

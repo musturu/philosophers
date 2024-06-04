@@ -16,48 +16,38 @@
 
 void	take_forks(t_phil *phil)
 {
-	// if (phil->id % 2 == 0)
-	// {
-	// 	pthread_mutex_lock(phil->l_fork);
-	// 	*phil->lflag = 0;
-	// 	if (phil->args->n_philos == 1)
-	// 		return ;
-	// 	msg_lock(" has taken a fork\n", phil->write, *phil);
-	// 	pthread_mutex_lock(phil->r_fork);
-	// 	*phil->rflag = 0;
-	// 	msg_lock(" has taken a fork\n", phil->write, *phil);
-	// }
-	//else
-	//{
-		pthread_mutex_lock(phil->r_fork);
-		*phil->rflag = 0;
-		msg_lock(" has taken a fork\n", phil->write, *phil);
-		if (phil->args->n_philos == 1)
-			return ;
+	if (phil->id % 2 == 0)
+	{
 		pthread_mutex_lock(phil->l_fork);
-		*phil->lflag = 0;
-		msg_lock(" has taken a fork\n", phil->write, *phil);
-	//}
+		msg_lock("has taken a fork\n", phil->write, *phil);
+		pthread_mutex_lock(phil->r_fork);
+		msg_lock("has taken a fork\n", phil->write, *phil);
+		return ;
+	}
+	else
+	{
+		pthread_mutex_lock(phil->r_fork);
+		msg_lock("has taken a fork\n", phil->write, *phil);
+		pthread_mutex_lock(phil->l_fork);
+		msg_lock("has taken a fork\n", phil->write, *phil);
+		return ;
+	}
 }
 
 void	drop_forks(t_phil *phil)
 {
-	*phil->lflag = 1;
-	*phil->rflag = 1;
 	pthread_mutex_unlock(phil->l_fork);
 	pthread_mutex_unlock(phil->r_fork);
 }
 
 void	eat(t_phil *phil, int time_to_eat)
 {
-	if (phil->args->n_philos == 1)
-		return ;
 	pthread_mutex_lock(phil->deadlock);
 	phil->eat_flag = 1;
-	pthread_mutex_unlock(phil->deadlock);
 	phil->last_meal = millitime();
 	phil->meals_count++;
-	msg_lock(" is eating\n", phil->write, *phil);
+	pthread_mutex_unlock(phil->deadlock);
+	msg_lock("is eating\n", phil->write, *phil);
 	ft_usleep(time_to_eat);
 	drop_forks(phil);
 	pthread_mutex_lock(phil->deadlock);
@@ -67,7 +57,7 @@ void	eat(t_phil *phil, int time_to_eat)
 
 void	philo_sleep(t_phil *phil, int time_to_sleep)
 {
-	msg_lock(" is sleeping\n", phil->write, *phil);
+	msg_lock("is sleeping\n", phil->write, *phil);
 	ft_usleep(time_to_sleep);
 }
 
@@ -86,18 +76,14 @@ void	eat_sleep_repeat(void *philo)
 	phil->last_meal = millitime();
 	pthread_mutex_unlock(phil->deadlock);
 	if (phil->id % 2 == 0 || (phil->id == phil->args->n_philos && phil->args->n_philos % 2 == 1))
-	{
-		msg_lock(" is thinking\n", phil->write, *phil);
 		ft_usleep(time_to_eat);
-	}
 	while (!stop_watch(phil))
 	{
 		take_forks(phil);
 		eat(phil, time_to_eat);
-		if (phil->args->n_philos == 1)
-			break ;
-		philo_sleep(phil, time_to_sleep);
-		msg_lock(" is thinking\n", phil->write, *phil);
+		msg_lock("is sleeping\n", phil->write, *phil);
+		ft_usleep(time_to_sleep);
+		msg_lock("is thinking\n", phil->write, *phil);
 		if (phil->args->n_philos % 2 == 1)
 			ft_usleep(time_to_eat);
 	}

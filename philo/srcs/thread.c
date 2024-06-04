@@ -24,10 +24,10 @@ int	run_threads(t_table *t)
 			return (1);
 		usleep(1);
 	}
-	//pthread_mutex_lock(t->philos->write);
-	t->start = 1;
+	pthread_mutex_lock(&t->stopwatch);
 	t->args.start_time = millitime();
-	//pthread_mutex_unlock(t->philos->write);
+	t->start = 1;
+	pthread_mutex_unlock(&t->stopwatch);
 	if (pthread_create(&t->threads[i], NULL, (void *)&(check_health), t))
 		return (1);
 	while (i >= 0)
