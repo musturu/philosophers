@@ -12,6 +12,7 @@
 
 #include "philo.h"
 #include <semaphore.h>
+#include <unistd.h>
 
 void	*ft_calloc(size_t count, size_t size)
 {
@@ -40,6 +41,9 @@ int	ft_usleep(useconds_t time)
 {
 	u_int64_t	start;
 
+	usleep(time * 500);
+	usleep(time * 500);
+	return (0);
 	start = millitime();
 	while ((millitime() - start) < time)
 		usleep(time / 10);

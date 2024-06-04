@@ -34,9 +34,9 @@ void	drop_forks(t_phil *phil)
 void	eat(t_phil *phil, int time_to_eat)
 {
 	take_forks(phil);
+	phil->eat_flag = 1;
 	phil->last_meal = millitime();
 	msg_lock("is eating", phil->write, *phil);
-	phil->eat_flag = 1;
 	phil->meals_count++;
 	if (phil->meals_count == phil->args.n_meals)
 		sem_post(phil->stop);
@@ -68,6 +68,8 @@ void	eat_sleep_repeat(void *philo)
 		|| phil->stop == SEM_FAILED)
 		exit(-1);
 	pthread_create(&thread, NULL, (void *)check_health, phil);
+	if (phil->id % 2 == 0 || (phil->id == phil->args.n_philos && phil->args.n_philos % 2 == 1))
+		ft_usleep(time_to_eat);
 	while (1)
 	{
 		eat(phil, time_to_eat);
