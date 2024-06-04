@@ -2,7 +2,7 @@
 CC = gcc
 
 # Compiler flags
-CFLAGS = -Wall -Wextra -Werror -pthread
+CFLAGS = -Wall -Wextra -Werror -pthread -g
 
 # Directories
 SRCDIR = srcs/
@@ -11,23 +11,23 @@ OBJDIR = objs/
 # Libraries
 
 # Source files
-SRC = actions.c validation.c init.c philo.c thread.c utils.c monitor.c free_memory.c
+SRC = actions.c validation.c init.c philo.c thread.c utils.c monitor.c free_memory.c print_utils.c
 
 SRCS	= $(addprefix $(SRCDIR), $(SRC))
 OBJ		= $(SRC:.c=.o)
-OBJS	= $(addprefix $(OBJDIR), $(OBJ)) 
+OBJS	= $(addprefix $(OBJDIR), $(OBJ))
 
 # Executable name
 NAME = philo
 
-all: $(NAME) 
+all: $(NAME)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
-		
+
 
 $(OBJDIR):
 	mkdir -p $@

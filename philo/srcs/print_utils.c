@@ -1,40 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor.c                                          :+:      :+:    :+:   */
+/*   print_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/18 18:14:45 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/03 18:45:12 by lmoricon         ###   ########.fr       */
+/*   Created: 2024/01/09 17:28:39 by lmoricon          #+#    #+#             */
+/*   Updated: 2024/06/04 22:11:54 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <semaphore.h>
-#include <unistd.h>
 
-void	kill_phil(t_phil *table);
-
-void	check_health(void *phil)
-{
-	t_phil	*p;
-
-	p = (t_phil *)phil;
-	while (1)
-	{
-		if ((!p->eat_flag && millitime() >= p->last_meal + p->args.tt_die))
-			break ;
-	}
-	kill_phil(p);
-}
-
-void	kill_phil(t_phil *table)
+int	ft_strlen(const char *s)
 {
 	int	i;
 
-	i = -1;
-	msg_lock("died", table->write, *table);
-	while (++i < table->args.n_philos)
-		sem_post(table->stop);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(fd, &c, 1);
+}
+static void	ft_aux(long int num, int fd)
+{
+	int	w;
+
+	if (num > 9)
+		ft_aux(num / 10, fd);
+	w = (num % 10) + '0';
+	ft_putchar_fd(w, fd);
+}
+void	ft_putnbr_fd(int n, int fd)
+{
+	long int	num;
+
+	num = n;
+	ft_aux(num, fd);
 }

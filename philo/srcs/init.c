@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:12:46 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:12:47 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:19:00 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,5 @@ static t_args	init_args(int argc, char **argv)
 		ret.n_meals = ft_atoi(argv[5]);
 	else
 		ret.n_meals = 0;
-	printf("wtf %i\n", ret.n_meals);
 	return (ret);
 }

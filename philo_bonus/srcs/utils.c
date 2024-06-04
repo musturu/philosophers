@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:58 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/31 19:53:34 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:29:23 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,11 @@ int	ft_usleep(useconds_t time)
 
 void	msg_lock(char *str, sem_t *lock, t_phil phil)
 {
+	long long timestamp;
+
+	timestamp = millitime() - phil.args.start_time;
 	sem_wait(lock);
-	printf("%llu %i %s\n",
-		millitime() - phil.args.start_time, phil.id, str);
+	printf("%llu %i %s\n", timestamp, phil.id, str);
 	if (str[0] != 'd')
 		sem_post(lock);
 }

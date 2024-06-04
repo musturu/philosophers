@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:12:51 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/31 14:12:46 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/04 22:17:02 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ char	has_to_die(t_table *t, int i, int end)
 
 int	phil_checks(t_table *t, int i, int end)
 {
-	pthread_mutex_lock(t->deadlocks + i);
 	if (has_to_die(t, i, end))
 	{
-		pthread_mutex_unlock(t->deadlocks + i);
 		return (0);
 	}
-	pthread_mutex_unlock(t->deadlocks + i);
 	if (t->args.n_meals != 0 && t->philos[i].meals_count >= t->args.n_meals)
+	{
 		return (1);
+	}
+	pthread_mutex_unlock(t->deadlocks + i);
 	return (2);
 }
 
@@ -54,7 +54,9 @@ void	check_health(void *tableu)
 		i = -1;
 		while (++i < t->args.n_philos)
 		{
+			pthread_mutex_lock(t->deadlocks + i);
 			boole = phil_checks(t, i, end);
+			pthread_mutex_unlock(t->deadlocks + i);
 			if (boole == 0)
 				break ;
 			else if (boole == 1)
@@ -77,4 +79,16 @@ void	kill_phil(t_table *t, int i, int killflag)
 	else
 		printf(GRNB"simulation has ended, no phils were harmed"RESET"\n");
 	pthread_mutex_unlock(t->philos[0].write);
+}
+
+int	start_watch(t_phil *phil)
+{
+	pthread_mutex_lock(phil->write);
+	if (*phil->start)
+	{
+		pthread_mutex_unlock(phil->write);
+		return (1);
+	}
+	pthread_mutex_unlock(phil->write);
+	return (0);
 }

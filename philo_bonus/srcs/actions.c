@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:33 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:14:34 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/03 18:41:56 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 void	take_forks(t_phil *phil)
 {
 	sem_wait(phil->forks);
-	msg_lock("took a fork", phil->write, *phil);
+	msg_lock("has taken a fork", phil->write, *phil);
 	sem_wait(phil->forks);
-	msg_lock("took a fork", phil->write, *phil);
+	msg_lock("has taken a fork", phil->write, *phil);
 }
 
 void	drop_forks(t_phil *phil)
@@ -70,7 +70,6 @@ void	eat_sleep_repeat(void *philo)
 	pthread_create(&thread, NULL, (void *)check_health, phil);
 	while (1)
 	{
-		usleep(30);
 		eat(phil, time_to_eat);
 		philo_sleep(phil, time_to_sleep);
 		msg_lock("is thinking", phil->write, *phil);

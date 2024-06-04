@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:13:00 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:13:00 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/04 21:45:00 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,12 @@ void		eat_sleep_repeat(void *philo);
 int			run_threads(t_table *table);
 int			ft_usleep(useconds_t time);
 long long	millitime(void);
+int			stop_watch(t_phil *phil);
+int			start_watch(t_phil *phil);
+int	ft_strlen(const char *s);
+void	ft_putnbr_fd(int n, int fd);
+
+
+
 
 #endif
