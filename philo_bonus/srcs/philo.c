@@ -52,7 +52,8 @@ int	main(int argc, char **argv)
 		return (throw_error("Threading", &table));
 	while (++i < table.args.n_philos)
 		sem_wait(table.stop);
-	printf("simulation has ended at %llu\n", millitime() - table.args.start_time);
+	printf("simulation has ended at %llu\n",
+		millitime() - table.args.start_time);
 	kill_children(table);
 	return (ft_exit(&table));
 }

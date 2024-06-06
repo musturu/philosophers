@@ -86,6 +86,4 @@ long long	millitime(void);
 int			stop_watch(t_phil *phil);
 int			start_watch(t_phil *phil);
 
-
-
 #endif

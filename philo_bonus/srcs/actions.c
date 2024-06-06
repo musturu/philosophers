@@ -36,7 +36,7 @@ void	eat(t_phil *phil, int time_to_eat)
 	sem_wait(phil->forks);
 	sem_wait(phil->forks);
 	msg_lock("has taken both forks", phil->write, *phil);
-	//msg_lock("has taken a fork", phil->write, *phil);
+	msg_lock("has taken a fork", phil->write, *phil);
 	phil->eat_flag = 1;
 	phil->last_meal = millitime();
 	msg_lock("is eating", phil->write, *phil);
@@ -77,7 +77,7 @@ void	eat_sleep_repeat(void *philo)
 	{
 		eat(phil, time_to_eat);
 		ft_usleep(time_to_sleep);
-		//msg_lock("is thinking", phil->write, *phil);
+		msg_lock("is thinking", phil->write, *phil);
 	}
 	pthread_join(thread, NULL);
 	close_sems(phil);

@@ -73,7 +73,8 @@ void	eat_sleep_repeat(void *philo)
 	pthread_mutex_lock(phil->deadlock);
 	phil->last_meal = millitime();
 	pthread_mutex_unlock(phil->deadlock);
-	if (phil->id % 2 == 0 || (phil->id == phil->args->n_philos && phil->args->n_philos % 2 == 1))
+	if (phil->id % 2 == 0
+		|| (phil->id == phil->args->n_philos && phil->args->n_philos % 2 == 1))
 		ft_usleep(time_to_eat);
 	while (!stop_watch(phil))
 	{

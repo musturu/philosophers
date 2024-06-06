@@ -52,7 +52,7 @@ int	ft_usleep(useconds_t time)
 
 void	msg_lock(char *str, sem_t *lock, t_phil phil)
 {
-	long long timestamp;
+	long long	timestamp;
 
 	timestamp = millitime() - phil.args.start_time;
 	sem_wait(lock);

@@ -28,23 +28,27 @@ char	has_to_die(t_table *t, int i, int end, long long timestamp)
 
 int	phil_checks(t_table *t, int i, int end, long long timestamp)
 {
+	pthread_mutex_lock(t->deadlocks + i);
 	if (has_to_die(t, i, end, timestamp))
 	{
+		pthread_mutex_unlock(t->deadlocks + i);
 		return (0);
 	}
 	if (t->args.n_meals != 0 && t->philos[i].meals_count >= t->args.n_meals)
 	{
+		pthread_mutex_unlock(t->deadlocks + i);
 		return (1);
 	}
+	pthread_mutex_unlock(t->deadlocks + i);
 	return (2);
 }
 
 void	check_health(void *tableu)
 {
-	int		i;
-	t_table	*t;
-	int		end;
-	int		boole;
+	int			i;
+	t_table		*t;
+	int			end;
+	int			boole;
 	long long	timestamp;
 
 	t = (t_table *)tableu;
@@ -55,9 +59,7 @@ void	check_health(void *tableu)
 		timestamp = millitime();
 		while (++i < t->args.n_philos)
 		{
-			pthread_mutex_lock(t->deadlocks + i);
 			boole = phil_checks(t, i, end, timestamp);
-			pthread_mutex_unlock(t->deadlocks + i);
 			if (boole == 0)
 				break ;
 			else if (boole == 1)
