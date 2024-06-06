@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:55 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/06 21:28:43 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/06 22:20:12 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_table
 	sem_t	*data;
 }	t_table;
 
-void	destroy_sem(void);
+void		destroy_sem(void);
 int			ft_exit(t_table *table);
 void		close_sems(t_phil	*phil);
 void		*ft_calloc(size_t count, size_t size);
