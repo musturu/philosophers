@@ -17,7 +17,6 @@ void	free_table(t_table *table)
 	free(table->philos);
 	free(table->threads);
 	free(table->forks);
-	free(table->forkflags);
 	free(table->deadlocks);
 }
 

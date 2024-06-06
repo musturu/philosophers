@@ -20,8 +20,8 @@
 void	take_forks(t_phil *phil)
 {
 	sem_wait(phil->forks);
-	msg_lock("has taken a fork", phil->write, *phil);
 	sem_wait(phil->forks);
+	msg_lock("has taken a fork", phil->write, *phil);
 	msg_lock("has taken a fork", phil->write, *phil);
 }
 
@@ -33,7 +33,10 @@ void	drop_forks(t_phil *phil)
 
 void	eat(t_phil *phil, int time_to_eat)
 {
-	take_forks(phil);
+	sem_wait(phil->forks);
+	sem_wait(phil->forks);
+	msg_lock("has taken both forks", phil->write, *phil);
+	//msg_lock("has taken a fork", phil->write, *phil);
 	phil->eat_flag = 1;
 	phil->last_meal = millitime();
 	msg_lock("is eating", phil->write, *phil);
@@ -41,7 +44,8 @@ void	eat(t_phil *phil, int time_to_eat)
 	if (phil->meals_count == phil->args.n_meals)
 		sem_post(phil->stop);
 	ft_usleep(time_to_eat);
-	drop_forks(phil);
+	sem_post(phil->forks);
+	sem_post(phil->forks);
 	phil->eat_flag = 0;
 }
 
@@ -67,14 +71,13 @@ void	eat_sleep_repeat(void *philo)
 	if (phil->forks == SEM_FAILED || phil->write == SEM_FAILED
 		|| phil->stop == SEM_FAILED)
 		exit(-1);
+	phil->last_meal = millitime();
 	pthread_create(&thread, NULL, (void *)check_health, phil);
-	if (phil->id % 2 == 0 || (phil->id == phil->args.n_philos && phil->args.n_philos % 2 == 1))
-		ft_usleep(time_to_eat);
 	while (1)
 	{
 		eat(phil, time_to_eat);
-		philo_sleep(phil, time_to_sleep);
-		msg_lock("is thinking", phil->write, *phil);
+		ft_usleep(time_to_sleep);
+		//msg_lock("is thinking", phil->write, *phil);
 	}
 	pthread_join(thread, NULL);
 	close_sems(phil);

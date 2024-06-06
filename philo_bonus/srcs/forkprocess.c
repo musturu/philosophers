@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <math.h>
 #include <unistd.h>
 
 int	run_threads(t_table *table)

@@ -23,10 +23,8 @@ int	allocate(t_table *table)
 	table->threads = malloc(sizeof(pthread_t) * (table->args.n_philos + 1));
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->args.n_philos);
 	table->deadlocks = malloc(sizeof(pthread_mutex_t) * table->args.n_philos);
-	table->forkflags = ft_calloc(sizeof(char), table->args.n_philos);
-	memset(table->forkflags, 1, table->args.n_philos);
 	if (table->philos && table->threads && table->forks
-		&& table->deadlocks && table->forkflags)
+		&& table->deadlocks)
 		return (1);
 	else
 		return (0);
@@ -51,8 +49,6 @@ int	initialize(int argc, char **argv, t_table *table)
 	table->isdead = 0;
 	table->start = 0;
 	table->philos = init_philos(table);
-	if (!table->philos)
-		return (0);
 	return (1);
 }
 
@@ -76,11 +72,9 @@ static t_phil	*init_philos(t_table *table)
 		philos[i].stopwatch = &(table->stopwatch);
 		philos[i].deadlock = table->deadlocks + i;
 		philos[i].r_fork = table->forks + i;
-		philos[i].rflag = table->forkflags + i;
 		pthread_mutex_init(philos[i].deadlock, NULL);
 		pthread_mutex_init(philos[i++].r_fork, NULL);
 		philos[i % table->args.n_philos].l_fork = philos[i - 1].r_fork;
-		philos[i % table->args.n_philos].lflag = philos[i - 1].rflag;
 	}
 	return (philos);
 }

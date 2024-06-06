@@ -85,9 +85,6 @@ int			ft_usleep(useconds_t time);
 long long	millitime(void);
 int			stop_watch(t_phil *phil);
 int			start_watch(t_phil *phil);
-int	ft_strlen(const char *s);
-void	ft_putnbr_fd(int n, int fd);
-
 
 
 

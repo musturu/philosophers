@@ -17,6 +17,7 @@ int	run_threads(t_table *t)
 	int	i;
 
 	i = -1;
+	pthread_mutex_lock(&t->stopwatch);
 	while (++i < t->args.n_philos)
 	{
 		if (pthread_create(&t->threads[i], NULL, (void *)&eat_sleep_repeat,
@@ -24,7 +25,6 @@ int	run_threads(t_table *t)
 			return (1);
 		usleep(1);
 	}
-	pthread_mutex_lock(&t->stopwatch);
 	t->args.start_time = millitime();
 	t->start = 1;
 	pthread_mutex_unlock(&t->stopwatch);
