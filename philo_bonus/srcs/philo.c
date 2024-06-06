@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:48 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:14:50 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:23:06 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	main(int argc, char **argv)
 		return (printf(BAD_ARGS));
 	if (!initialize(argc, argv, &table))
 		return (throw_error("Initializing", &table));
-	print_table(table);
 	if (run_threads(&table))
 		return (throw_error("Threading", &table));
 	while (++i < table.args.n_philos)
@@ -55,5 +54,6 @@ int	main(int argc, char **argv)
 	printf("simulation has ended at %llu\n",
 		millitime() - table.args.start_time);
 	kill_children(table);
+	printf("mhhhhhhhhh\n");
 	return (ft_exit(&table));
 }

@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:33 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/03 18:41:56 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:52:21 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,36 +17,20 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void	take_forks(t_phil *phil)
-{
-	sem_wait(phil->forks);
-	sem_wait(phil->forks);
-	msg_lock("has taken a fork", phil->write, *phil);
-	msg_lock("has taken a fork", phil->write, *phil);
-}
-
-void	drop_forks(t_phil *phil)
-{
-	sem_post(phil->forks);
-	sem_post(phil->forks);
-}
-
 void	eat(t_phil *phil, int time_to_eat)
 {
 	sem_wait(phil->forks);
 	sem_wait(phil->forks);
-	msg_lock("has taken both forks", phil->write, *phil);
 	msg_lock("has taken a fork", phil->write, *phil);
-	phil->eat_flag = 1;
+	sem_wait(phil->data);
 	phil->last_meal = millitime();
-	msg_lock("is eating", phil->write, *phil);
+	sem_post(phil->data);
 	phil->meals_count++;
 	if (phil->meals_count == phil->args.n_meals)
 		sem_post(phil->stop);
 	ft_usleep(time_to_eat);
 	sem_post(phil->forks);
 	sem_post(phil->forks);
-	phil->eat_flag = 0;
 }
 
 void	philo_sleep(t_phil *phil, int time_to_sleep)
@@ -65,21 +49,14 @@ void	eat_sleep_repeat(void *philo)
 	phil = (t_phil *)philo;
 	time_to_eat = phil->args.tt_eat;
 	time_to_sleep = phil->args.tt_sleep;
-	phil->forks = sem_open("/forks", 0);
-	phil->stop = sem_open("/stop", 0);
-	phil->write = sem_open("/write", 0);
-	if (phil->forks == SEM_FAILED || phil->write == SEM_FAILED
-		|| phil->stop == SEM_FAILED)
-		exit(-1);
 	phil->last_meal = millitime();
 	pthread_create(&thread, NULL, (void *)check_health, phil);
+	pthread_detach(thread);
 	while (1)
 	{
 		eat(phil, time_to_eat);
+		msg_lock("is sleeping", phil->write, *phil);
 		ft_usleep(time_to_sleep);
 		msg_lock("is thinking", phil->write, *phil);
 	}
-	pthread_join(thread, NULL);
-	close_sems(phil);
-	exit(1);
 }

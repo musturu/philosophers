@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:55 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:14:56 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:28:43 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ typedef struct s_args
 typedef struct s_philo
 {
 	int				id;
-	char			*sem_name;
 	char			eat_flag;
 	long long		last_meal;
 	t_args			args;
@@ -54,6 +53,7 @@ typedef struct s_philo
 	sem_t			*forks;
 	sem_t			*write;
 	sem_t			*stop;
+	sem_t			*data;
 }	t_phil;
 
 typedef struct s_table
@@ -64,8 +64,10 @@ typedef struct s_table
 	sem_t	*forks;
 	sem_t	*write;
 	sem_t	*stop;
+	sem_t	*data;
 }	t_table;
 
+void	destroy_sem(void);
 int			ft_exit(t_table *table);
 void		close_sems(t_phil	*phil);
 void		*ft_calloc(size_t count, size_t size);

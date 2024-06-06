@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   forkprocess.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmoricon <lmoricon@student.42roma.it>      +#+  +:+       +#+        */
+/*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:37 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/05/18 18:15:06 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/06 21:20:24 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	run_threads(t_table *table)
 		if (!pid[i])
 		{
 			eat_sleep_repeat(table->philos + i);
-			return (1);
+			exit(0);
 		}
 	}
 	table->pid = pid;
