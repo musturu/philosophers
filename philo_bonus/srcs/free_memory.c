@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:40 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/06 21:35:01 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:16:59 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	throw_error(char *str, t_table *table)
 
 int	ft_exit(t_table *table)
 {
-	sem_close(table->forks);
+	close_sems(table->philos);
 	destroy_sem();
 	free_table(table);
 	return (1);

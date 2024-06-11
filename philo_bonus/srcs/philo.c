@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:48 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/06 21:23:06 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:15:15 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	kill_children(t_table table)
 
 	i = 0;
 	while (i < table.args.n_philos)
-		kill(table.pid[i++], SIGINT);
+		kill(table.pid[i++], SIGTERM);
 }
 
 int	main(int argc, char **argv)

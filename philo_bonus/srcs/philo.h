@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:55 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/06 22:20:12 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:08:55 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_philo
 	long long		last_meal;
 	t_args			args;
 	int				meals_count;
+	int				*stopflag;
 	sem_t			*forks;
 	sem_t			*write;
 	sem_t			*stop;
