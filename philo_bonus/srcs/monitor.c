@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:45 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/11 19:11:10 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/11 19:34:00 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	check_health(void *phil)
 		if ((millitime() > p->last_meal + p->args.tt_die))
 			break ;
 		sem_post(p->data);
-		usleep(500);
 	}
 	kill_phil(p);
 }
