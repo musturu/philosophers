@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:58 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/06 21:46:58 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:42:41 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	msg_lock(char *str, sem_t *lock, t_phil phil)
 {
 	long long	timestamp;
 
-	timestamp = millitime() - phil.args.start_time;
 	sem_wait(lock);
+	timestamp = millitime() - phil.args.start_time;
 	printf("%llu %i %s\n", timestamp, phil.id, str);
 	if (str[0] == 'h')
 	{

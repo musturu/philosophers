@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:48 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/11 19:15:15 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:50:01 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,33 @@ void	print_table(t_table table)
 	print_args(table.args);
 }
 
-void	kill_children(t_table table)
+void	kill_children(t_table table, pid_t *pids)
 {
 	int	i;
 
 	i = 0;
 	while (i < table.args.n_philos)
-		kill(table.pid[i++], SIGTERM);
+	{
+		kill(pids[i], SIGKILL);
+		i++;
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_table	table;
 	int		i;
+	pid_t	*pids;
 
 	i = -1;
 	if (!validate(argc, argv))
 		return (printf(BAD_ARGS));
 	if (!initialize(argc, argv, &table))
 		return (throw_error("Initializing", &table));
-	if (run_threads(&table))
-		return (throw_error("Threading", &table));
+	pids = run_threads(&table);
 	while (++i < table.args.n_philos)
 		sem_wait(table.stop);
-	printf("simulation has ended at %llu\n",
-		millitime() - table.args.start_time);
-	kill_children(table);
-	printf("mhhhhhhhhh\n");
+	kill_children(table, pids);
+	table.pid = pids;
 	return (ft_exit(&table));
 }

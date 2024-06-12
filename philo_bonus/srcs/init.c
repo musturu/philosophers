@@ -6,23 +6,19 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:42 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/11 19:09:09 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:45:26 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 static t_args	init_args(int argc, char **argv);
-static t_phil	*init_philos(t_table *table);
 
 int	allocate(t_table *table)
 {
 	int	i;
 
 	i = -1;
-	table->philos = malloc(sizeof(t_phil) * table->args.n_philos);
-	if (!table->philos)
-		return (0);
 	destroy_sem();
 	table->forks = sem_open("/forks", O_CREAT, 0777, 0U);
 	table->data = sem_open("/data", O_CREAT, 0777, 1U);
@@ -49,25 +45,21 @@ int	initialize(int argc, char **argv, t_table *table)
 	return (1);
 }
 
-static t_phil	*init_philos(t_table *table)
+t_phil	init_philos(t_table *table)
 {
-	int		i;
-	t_phil	*philos;
+	t_phil	philos;
 
-	philos = table->philos;
-	i = -1;
-	while (++i < table->args.n_philos)
-	{
-		philos[i].write = table->write;
-		philos[i].stop = table->stop;
-		philos[i].forks = table->forks;
-		philos[i].data = table->data;
-		philos[i].args = table->args;
-		philos[i].id = i + 1;
-		philos[i].eat_flag = 0;
-		philos[i].meals_count = 0;
-		philos[i].last_meal = millitime();
-	}
+	philos.write = table->write;
+	philos.stop = table->stop;
+	philos.forks = table->forks;
+	philos.data = table->data;
+	philos.args = table->args;
+	philos.redflag = 1;
+	philos.stopmain = table->stopmain;
+	philos.greenflag = table->greenflag;
+	philos.meals_count = 0;
+	philos.last_meal = millitime();
+	table->philos = philos;
 	return (philos);
 }
 

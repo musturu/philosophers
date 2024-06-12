@@ -6,32 +6,41 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:37 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/06 21:20:24 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:49:04 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <math.h>
 #include <unistd.h>
 
-int	run_threads(t_table *table)
+pid_t	forka(t_phil *phil, int i);
+
+pid_t	*run_threads(t_table *table)
 {
 	int		i;
 	pid_t	*pid;
+	t_phil	phil;
 
 	i = -1;
 	pid = malloc(sizeof(pid_t) * table->args.n_philos);
-	if (!pid)
-		return (1);
+	phil = init_philos(table);
 	while (++i < table->args.n_philos)
 	{
-		pid[i] = fork();
-		if (!pid[i])
-		{
-			eat_sleep_repeat(table->philos + i);
-			exit(0);
-		}
+		pid[i] = forka(&phil, i);
 	}
-	table->pid = pid;
-	return (0);
+	return pid;
+}
+
+pid_t	forka(t_phil *phil, int i)
+{
+	pid_t	ret;
+
+	ret = fork();
+	if (!ret)
+	{
+		phil->id = i + 1;
+		eat_sleep_repeat(phil);
+		exit(0);
+	}
+	return ret;
 }

@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:55 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/11 19:08:55 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 19:47:47 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,38 @@ typedef struct s_args
 typedef struct s_philo
 {
 	int				id;
-	char			eat_flag;
 	long long		last_meal;
 	t_args			args;
 	int				meals_count;
-	int				*stopflag;
-	sem_t			*forks;
+	int				redflag;
 	sem_t			*write;
-	sem_t			*stop;
 	sem_t			*data;
+	sem_t			*stop;
+	sem_t			*forks;
+	sem_t			*greenflag;
+	sem_t			*stopmain;
+	pthread_t		thread;
 }	t_phil;
 
 typedef struct s_table
 {
 	pid_t	*pid;
 	t_args	args;
-	t_phil	*philos;
-	sem_t	*forks;
+	t_phil	philos;
 	sem_t	*write;
-	sem_t	*stop;
 	sem_t	*data;
+	sem_t	*forks;
+	sem_t	*stop;
+	sem_t	*stopmain;
+	sem_t	*greenflag;
 }	t_table;
 
+
+void	exit_program(void *phil);
+t_phil		init_philos(t_table *table);
 void		destroy_sem(void);
 int			ft_exit(t_table *table);
-void		close_sems(t_phil	*phil);
+void		close_sems(t_phil	phil);
 void		*ft_calloc(size_t count, size_t size);
 int			ft_atoi(const char *str);
 int			throw_error(char *str, t_table *table);
@@ -79,7 +86,7 @@ void		check_health(void *tableu);
 int			validate(int argc, char **argv);
 int			initialize(int argc, char **argv, t_table *table);
 void		eat_sleep_repeat(void *philo);
-int			run_threads(t_table *table);
+pid_t		*run_threads(t_table *table);
 int			ft_usleep(useconds_t time);
 long long	millitime(void);
 char		*ft_itoa(int n);
