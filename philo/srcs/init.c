@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:12:46 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/04 22:19:00 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:31:16 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static t_phil	*init_philos(t_table *table)
 		philos[i].start = &(table->start);
 		philos[i].args = &table->args;
 		philos[i].id = i + 1;
-		philos[i].eat_flag = 0;
 		philos[i].meals_count = 0;
 		philos[i].last_meal = millitime();
 		philos[i].stop = &(table->isdead);

@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:13:00 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/04 21:45:00 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:29:25 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_args
 typedef struct s_philo
 {
 	int				id;
-	char			eat_flag;
 	long long		last_meal;
 	t_args			*args;
 	int				meals_count;
@@ -81,7 +80,7 @@ int			validate(int argc, char **argv);
 int			initialize(int argc, char **argv, t_table *table);
 void		eat_sleep_repeat(void *philo);
 int			run_threads(t_table *table);
-int			ft_usleep(useconds_t time);
+void		ft_usleep(useconds_t time);
 long long	millitime(void);
 int			stop_watch(t_phil *phil);
 int			start_watch(t_phil *phil);

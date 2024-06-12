@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:13:08 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/04 22:24:26 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:48:40 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,24 +36,28 @@ long long	millitime(void)
 	return (microtime);
 }
 
-int	ft_usleep(useconds_t time)
+void	ft_usleep(useconds_t time)
 {
-	u_int64_t	start;
-
-	usleep(time * 500);
-	usleep(time * 500);
-	return (0);
-	start = millitime();
-	while ((millitime() - start) < time)
-		usleep(time / 10);
-	return (0);
+	usleep(time * 200);
+	usleep(time * 200);
+	usleep(time * 200);
+	usleep(time * 200);
+	usleep(time * 199);
+	return ;
 }
 
 void	msg_lock(char *str, pthread_mutex_t *lock, t_phil p)
 {
+	long long timestamp;
+
 	pthread_mutex_lock(lock);
+	timestamp = millitime() - p.args->start_time;
 	if (!*p.stop)
-		printf("%llu %i %s", millitime() - p.args->start_time, p.id, str);
+	{
+		printf("%llu %i %s", timestamp, p.id, str);
+		if (str[0] == 'h')
+			printf("%llu %i %s%llu %i %s", timestamp, p.id, str, timestamp, p.id, "is eating\n");
+	}
 	pthread_mutex_unlock(lock);
 }
 

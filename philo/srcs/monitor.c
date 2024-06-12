@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:12:51 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/04 22:17:02 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:31:30 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	kill_phil(t_table *table, int i, int flag);
 char	has_to_die(t_table *t, int i, int end, long long timestamp)
 {
 	if ((t->args.n_meals != 0 && end == t->args.n_philos)
-		|| (!t->philos[i].eat_flag
-			&& timestamp >= t->philos[i].last_meal + t->args.tt_die))
+		|| (timestamp > t->philos[i].last_meal + t->args.tt_die))
 		return (1);
 	return (0);
 }
@@ -49,17 +48,15 @@ void	check_health(void *tableu)
 	t_table		*t;
 	int			end;
 	int			boole;
-	long long	timestamp;
 
 	t = (t_table *)tableu;
 	while (1)
 	{
 		end = 0;
 		i = -1;
-		timestamp = millitime();
 		while (++i < t->args.n_philos)
 		{
-			boole = phil_checks(t, i, end, timestamp);
+			boole = phil_checks(t, i, end, millitime());
 			if (boole == 0)
 				break ;
 			else if (boole == 1)

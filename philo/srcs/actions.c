@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:11:45 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/04 22:27:04 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:47:50 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	take_forks(t_phil *phil)
 	if (phil->id % 2 == 0)
 	{
 		pthread_mutex_lock(phil->l_fork);
-		msg_lock("has taken a fork\n", phil->write, *phil);
 		pthread_mutex_lock(phil->r_fork);
 		msg_lock("has taken a fork\n", phil->write, *phil);
 		return ;
@@ -25,7 +24,6 @@ void	take_forks(t_phil *phil)
 	else
 	{
 		pthread_mutex_lock(phil->r_fork);
-		msg_lock("has taken a fork\n", phil->write, *phil);
 		pthread_mutex_lock(phil->l_fork);
 		msg_lock("has taken a fork\n", phil->write, *phil);
 		return ;
@@ -40,23 +38,15 @@ void	drop_forks(t_phil *phil)
 
 void	eat(t_phil *phil, int time_to_eat)
 {
+	pthread_mutex_lock(phil->l_fork);
+	pthread_mutex_lock(phil->r_fork);
+	msg_lock("has taken a fork\n", phil->write, *phil);
 	pthread_mutex_lock(phil->deadlock);
-	phil->eat_flag = 1;
 	phil->last_meal = millitime();
 	phil->meals_count++;
 	pthread_mutex_unlock(phil->deadlock);
-	msg_lock("is eating\n", phil->write, *phil);
 	ft_usleep(time_to_eat);
 	drop_forks(phil);
-	pthread_mutex_lock(phil->deadlock);
-	phil->eat_flag = 0;
-	pthread_mutex_unlock(phil->deadlock);
-}
-
-void	philo_sleep(t_phil *phil, int time_to_sleep)
-{
-	msg_lock("is sleeping\n", phil->write, *phil);
-	ft_usleep(time_to_sleep);
 }
 
 void	eat_sleep_repeat(void *philo)
@@ -78,7 +68,6 @@ void	eat_sleep_repeat(void *philo)
 		ft_usleep(time_to_eat);
 	while (!stop_watch(phil))
 	{
-		take_forks(phil);
 		eat(phil, time_to_eat);
 		msg_lock("is sleeping\n", phil->write, *phil);
 		ft_usleep(time_to_sleep);
