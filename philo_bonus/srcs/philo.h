@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:55 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 19:47:47 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:10:36 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ typedef struct s_philo
 	sem_t			*data;
 	sem_t			*stop;
 	sem_t			*forks;
-	sem_t			*greenflag;
-	sem_t			*stopmain;
 	pthread_t		thread;
 }	t_phil;
 
@@ -68,8 +66,6 @@ typedef struct s_table
 	sem_t	*data;
 	sem_t	*forks;
 	sem_t	*stop;
-	sem_t	*stopmain;
-	sem_t	*greenflag;
 }	t_table;
 
 
@@ -86,7 +82,7 @@ void		check_health(void *tableu);
 int			validate(int argc, char **argv);
 int			initialize(int argc, char **argv, t_table *table);
 void		eat_sleep_repeat(void *philo);
-pid_t		*run_threads(t_table *table);
+pid_t		*run_process(t_table *table);
 int			ft_usleep(useconds_t time);
 long long	millitime(void);
 char		*ft_itoa(int n);

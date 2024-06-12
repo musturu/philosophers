@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:40 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 19:49:36 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:08:26 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	destroy_sem(void)
 	sem_unlink("/stop");
 	sem_unlink("/write");
 	sem_unlink("/data");
-	sem_unlink("/greenflag");
-	sem_unlink("/stopmain");
 }
 
 void	close_sems(t_phil	phil)
@@ -29,8 +27,6 @@ void	close_sems(t_phil	phil)
 	sem_close(phil.data);
 	sem_close(phil.stop);
 	sem_close(phil.forks);
-	sem_close(phil.greenflag);
-	sem_close(phil.stopmain);
 }
 
 int	throw_error(char *str, t_table *table)

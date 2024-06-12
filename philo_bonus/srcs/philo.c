@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:48 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 19:50:01 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:10:27 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv)
 		return (printf(BAD_ARGS));
 	if (!initialize(argc, argv, &table))
 		return (throw_error("Initializing", &table));
-	pids = run_threads(&table);
+	pids = run_process(&table);
 	while (++i < table.args.n_philos)
 		sem_wait(table.stop);
 	kill_children(table, pids);

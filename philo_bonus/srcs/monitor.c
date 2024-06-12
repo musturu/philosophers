@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:45 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 19:42:14 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:09:16 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_health(void *phil)
 	t_phil	*p;
 
 	p = (t_phil *)phil;
-	while (p->redflag)
+	while (1)
 	{
 		sem_wait(p->data);
 		if ((millitime() > p->last_meal + p->args.tt_die + 3))
@@ -40,16 +40,4 @@ void	kill_phil(t_phil *table)
 	msg_lock("died", table->write, *table);
 	while (++i < table->args.n_philos)
 		sem_post(table->stop);
-}
-
-void	exit_program(void *phil)
-{
-	t_phil	*p;
-
-	p = (t_phil *)phil;
-	sem_wait(p->stopmain);
-	p->redflag = 0;
-	sem_post(p->stopmain);
-	sem_post(p->greenflag);
-	close_sems(*p);
 }

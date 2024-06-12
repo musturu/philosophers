@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:37 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 19:49:04 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:06:30 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 pid_t	forka(t_phil *phil, int i);
 
-pid_t	*run_threads(t_table *table)
+pid_t	*run_process(t_table *table)
 {
 	int		i;
 	pid_t	*pid;

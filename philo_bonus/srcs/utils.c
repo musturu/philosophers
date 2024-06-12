@@ -6,13 +6,14 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:58 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 19:42:41 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:13:31 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <semaphore.h>
 #include <unistd.h>
+#include <sys/types.h>
 
 void	*ft_calloc(size_t count, size_t size)
 {
