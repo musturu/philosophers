@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:13:08 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 15:48:40 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:07:35 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	ft_usleep(useconds_t time)
 	usleep(time * 200);
 	usleep(time * 200);
 	usleep(time * 200);
-	usleep(time * 199);
+	usleep(time * 200);
 	return ;
 }
 
 void	msg_lock(char *str, pthread_mutex_t *lock, t_phil p)
 {
-	long long timestamp;
+	long long	timestamp;
 
 	pthread_mutex_lock(lock);
 	timestamp = millitime() - p.args->start_time;
@@ -56,7 +56,8 @@ void	msg_lock(char *str, pthread_mutex_t *lock, t_phil p)
 	{
 		printf("%llu %i %s", timestamp, p.id, str);
 		if (str[0] == 'h')
-			printf("%llu %i %s%llu %i %s", timestamp, p.id, str, timestamp, p.id, "is eating\n");
+			printf("%llu %i %s%llu %i %s", timestamp,
+				p.id, str, timestamp, p.id, "is eating\n");
 	}
 	pthread_mutex_unlock(lock);
 }

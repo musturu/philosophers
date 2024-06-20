@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:37 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 20:06:30 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/17 15:08:02 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ pid_t	*run_process(t_table *table)
 	{
 		pid[i] = forka(&phil, i);
 	}
-	return pid;
+	return (pid);
 }
 
 pid_t	forka(t_phil *phil, int i)
@@ -42,5 +42,5 @@ pid_t	forka(t_phil *phil, int i)
 		eat_sleep_repeat(phil);
 		exit(0);
 	}
-	return ret;
+	return (ret);
 }

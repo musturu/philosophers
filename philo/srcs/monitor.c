@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:12:51 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 15:31:30 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:14:35 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	kill_phil(t_table *table, int i, int flag);
 char	has_to_die(t_table *t, int i, int end, long long timestamp)
 {
 	if ((t->args.n_meals != 0 && end == t->args.n_philos)
-		|| (timestamp > t->philos[i].last_meal + t->args.tt_die))
+		|| (timestamp > t->philos[i].last_meal + t->args.tt_die + 3))
 		return (1);
 	return (0);
 }

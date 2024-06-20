@@ -6,7 +6,7 @@
 /*   By: lmoricon <lmoricon@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 18:14:33 by lmoricon          #+#    #+#             */
-/*   Updated: 2024/06/12 20:09:20 by lmoricon         ###   ########.fr       */
+/*   Updated: 2024/06/12 20:22:20 by lmoricon         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	eat_sleep_repeat(void *philo)
 	phil->last_meal = millitime();
 	phil->thread = thread;
 	pthread_create(&thread, NULL, (void *)check_health, phil);
+	pthread_detach(thread);
 	while (1)
 	{
 		eat(phil, time_to_eat);
